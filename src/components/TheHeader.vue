@@ -10,7 +10,8 @@ export default {
   computed: {
     //...mapState (useAuthUserStore, ["user"])
     ...mapState (useAuthUserStore, {
-      user: "user"
+      user: "username"
+
       //user: (store) => `Hello ${store.user.username.toLowerCase()}`
     })
   }
@@ -25,8 +26,8 @@ export default {
   >
     <h1 class="text-4xl text-gray-700 font-bold">The Pineapple Stand</h1>
     <div>
-      <input v-model="user.username" type="text" />
-      <span class="mr-2">{{ user.username }}</span>
+      <input v-model="user" type="text" />
+      <span class="mr-2">{{ user }}</span>
       <CartWidget class="inline-block"/>
     </div>
   </header>

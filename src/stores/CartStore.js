@@ -20,7 +20,7 @@ export const useCartStore = defineStore("CartStore", {
             const authUserStore = useAuthUserStore();
             // ${authUserStore.username}
 
-            alert(` ${authUserStore.user.username} just bought ${this.count} products at a total of $ ${this.total.toFixed(2)}`);
+            alert(` ${authUserStore.username} just bought ${this.count} products at a total of $ ${this.total.toFixed(2)}`);
         },
 
         addProducts(count, product) {
