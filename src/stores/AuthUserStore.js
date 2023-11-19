@@ -4,13 +4,13 @@ export const useAuthUserStore = defineStore("AuthUserStore", {
     state: () => {
         return {
             //username: 'Seymi_admin',
-            users: [],
+            user: {},
         }
     },
 
     actions: {
         addUser(user) {
-            this.users.push(user);
+            this.user = user;
         },
         addAdminUser() {
             const user = {
@@ -21,7 +21,7 @@ export const useAuthUserStore = defineStore("AuthUserStore", {
         },
         addDemoUser() {
             const user = {
-                username: 'Demo',
+                username: 'Demo User',
                 role: 'demo'
             };
             this.addUser(user);

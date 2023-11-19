@@ -8,20 +8,13 @@
   import { useAuthUserStore } from "@/stores/AuthUserStore.js";
   const authUserStore = useAuthUserStore();
   authUserStore.addDemoUser();
+  //authUserStore.addAdminUser();
 
 
   const productStore = useProductStore();
   productStore.fill();
 
   const cartStore = useCartStore();
-
- //import { useAuthUserStore } from "@/stores/AuthUserStore.js";
- //const authUserStore = useAuthUserStore();
-
-
-  //import { useAuthUserStore } from "@/stores/AuthUserStore.js";
-  //const authUserStore = useAuthUserStore();
-  //authUserStore.addAdminUser();
 
 </script>
 
