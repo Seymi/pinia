@@ -1,7 +1,7 @@
 <script>
 import CartWidget from "@/components/CartWidget.vue";
 import { useAuthUserStore } from "@/stores/AuthUserStore.js";
-import { mapState } from "pinia";
+import { mapWritableState } from "pinia";
 
 //const useAuthUserStore = useAuthUserStore();
 
@@ -9,7 +9,7 @@ export default {
   components: { CartWidget },
   computed: {
     //...mapState (useAuthUserStore, ["user"])
-    ...mapState (useAuthUserStore, {
+    ...mapWritableState (useAuthUserStore, {
       user: "username"
 
       //user: (store) => `Hello ${store.user.username.toLowerCase()}`
