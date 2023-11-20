@@ -1,7 +1,7 @@
 <script>
 import CartWidget from "@/components/CartWidget.vue";
 import { useAuthUserStore } from "@/stores/AuthUserStore.js";
-import { mapWritableState } from "pinia";
+import { mapState, mapActions } from "pinia";
 
 //const useAuthUserStore = useAuthUserStore();
 
@@ -9,10 +9,17 @@ export default {
   components: { CartWidget },
   computed: {
     //...mapState (useAuthUserStore, ["user"])
-    ...mapWritableState (useAuthUserStore, {
-      user: "username"
 
+    //...mapWritableState (useAuthUserStore, {
+    ...mapState (useAuthUserStore, {
+      user: "username",
       //user: (store) => `Hello ${store.user.username.toLowerCase()}`
+    })
+  },
+  methods: {
+    //...mapActions (useAuthUserStore, [ 'clickUser'])
+    ...mapActions (useAuthUserStore, {
+      toSeymi: "clickUser"
     })
   }
 }
@@ -26,8 +33,7 @@ export default {
   >
     <h1 class="text-4xl text-gray-700 font-bold">The Pineapple Stand</h1>
     <div>
-      <input v-model="user" type="text" />
-      <span class="mr-2">{{ user }}</span>
+      <span class="mr-2" @click="toSeymi" >{{ user }}</span>
       <CartWidget class="inline-block"/>
     </div>
   </header>

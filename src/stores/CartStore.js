@@ -1,4 +1,4 @@
-import { defineStore } from "pinia";
+import { defineStore, acceptHMRUpdate } from "pinia";
 import { groupBy } from "lodash";
 
 import { useAuthUserStore } from "@/stores/AuthUserStore.js";
@@ -12,19 +12,26 @@ import { useAuthUserStore } from "@/stores/AuthUserStore.js";
 export const useCartStore = defineStore("CartStore", {
     state: () => {
         return {
-            productsInCart: []
+            productsInCart: [],
         }
     },
     actions: {
+
         checkOut() {
             const authUserStore = useAuthUserStore();
             // ${authUserStore.username}
 
-            alert(` ${authUserStore.username} just bought ${this.count} products at a total of $ ${this.total.toFixed(2)}`);
+            alert(` ${authUserStore.username} just bought ${this.count} products at a total of € ${this.total.toFixed(2)}`);
         },
 
         addProducts(count, product) {
             count = parseInt(count);
+
+            const debugmode = false;
+            if (debugmode) {
+                throw new Error("forced Error for testing purpose");
+            }
+
             for (let i = 0; i < count; i++) {
                 this.productsInCart.push({ ...product });
             }
@@ -39,6 +46,9 @@ export const useCartStore = defineStore("CartStore", {
             this.addProducts(qty, product);
         },
 
+        setEmpty() {
+            this.productsInCart = [];
+        }
 
 
     },
@@ -59,3 +69,7 @@ export const useCartStore = defineStore("CartStore", {
     }
 
 });
+
+if (import.meta.hot) {
+    import.meta.hot.accept(acceptHMRUpdate(useCartStore, import.meta.hot))
+}
