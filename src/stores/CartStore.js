@@ -46,8 +46,8 @@ export const useCartStore = defineStore("CartStore", {
             this.addProducts(qty, product);
         },
 
-        setEmpty() {
-            this.productsInCart = [];
+        async setEmpty() {
+            this.productsInCart = await [];
         }
 
 

@@ -23,9 +23,11 @@
   const redoList = reactive([]);
   const trackRedoList = ref(true);
 
+  cartStore.setEmpty();
   history.push( JSON.stringify(useCartStore.$state) );
 
   console.log('HL: ', history.length);
+  console.log('Hist: ', history);
 
   const redo = () => {
     if (redoList.length > 0 ) {
@@ -40,28 +42,20 @@
   }
 
   const undo = () => {
-    if (history.length === 1) return;
+    console.log ('hist len entering undo: ', history.length);
+    if (history.length === 2) return;
     // when cart is not empty, undo is recorded for redo
     trackRedoList.value = !cartStore.isEmpty;
+    recordHistory.value = false;
 
-    if (trackRedoList.value === true || history.length > 2 ) {
+    if (!cartStore.isEmpty || history.length > 3  ) {
       recordHistory.value = false;
       const lastOrder = history.slice(-1);
       history.pop();
       redoList.push(lastOrder);
-
-      if (history.length === 1) {
-        console.log ('history  vor setEmpty: ', history);
-
-        cartStore.setEmpty(); // dadurch wird history.length wieder 2
-        trackRedoList.value = false;
-
-        console.log ('hist len nach setEmpty: ', history.length);
-        console.log ('history  nach setEmpty: ', history);
-      } else {
-        cartStore.$state = JSON.parse(history.at(-1));
-        trackRedoList.value = true;
-      }
+      trackRedoList.value = true;
+      cartStore.$state = JSON.parse(history.at(-1));
+      trackRedoList.value = true;
       recordHistory.value = true;
     }
   }
@@ -70,8 +64,11 @@
     if (recordHistory.value) {
       history.push( JSON.stringify(state) );
       //changes resets redoList, only undo is source for redo
-      redoList.splice(0, redoList.length);
+      console.log('trackRedoList.value: ', trackRedoList.value);
+      if (trackRedoList.value) redoList.splice(0, redoList.length);
+      console.log('cleared redoList');
     }
+
   });
 
   cartStore.$onAction(({name, store, args, after, onError}) => {
